@@ -3,8 +3,8 @@ const retryBtn = document.querySelector("#retry-btn");
 
 const winPossibility = ["012", "345", "678", "036", "147", "258", "048", "246"];
 let playerMove = ["", "", "", "", "", "", "", "", ""];
-
 let currentPlayer = "x";
+let win = false;
 
 function setPlayer(index) {
   playerMove[index] = currentPlayer;
@@ -26,14 +26,12 @@ function drawPlayerMove(box) {
 }
 
 function checkWin() {
-  let win = false;
   winPossibility.forEach(function (posibility) {
     if (!win) {
       const check0 = playerMove[Number(posibility[0])];
       const check1 = playerMove[Number(posibility[1])];
       const check2 = playerMove[Number(posibility[2])];
       if (check0 === check1 && check1 === check2 && check0 !== "") {
-        console.log("TEST");
         win = true;
       }
     }
@@ -44,7 +42,7 @@ function checkWin() {
 function drawer() {
   boxs.forEach(function (box, index) {
     box.addEventListener("click", () => {
-      if (!box.hasChildNodes()) {
+      if (!box.hasChildNodes() && !win) {
         drawPlayerMove(box);
         setPlayer(index);
         const win = checkWin();
